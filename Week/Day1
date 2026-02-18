@@ -1,0 +1,45 @@
+/*
+  Day 1: ESP8266 SOS Blink
+  Board: NodeMCU 1.0 (ESP-12E Module)
+  LED: GPIO2 (D4) - Active LOW
+*/
+
+const int LED = LED_BUILTIN;  // Maps to GPIO2
+
+void setup() {
+  pinMode(LED, OUTPUT);
+  digitalWrite(LED, HIGH);  // Start OFF (inverted)
+  Serial.begin(115200);
+  Serial.println("ESP8266 Booted. Starting SOS...");
+}
+
+void loop() {
+  // S (···) - 3 short blinks
+  for(int i=0; i<3; i++) {
+    blink(200);  // 200ms on
+    delay(200);   // 200ms off
+  }
+  delay(600);     // Letter gap
+  
+  // O (———) - 3 long blinks
+  for(int i=0; i<3; i++) {
+    blink(600);  // 600ms on
+    delay(200);   // 200ms off
+  }
+  delay(600);     // Letter gap
+  
+  // S (···) - 3 short blinks
+  for(int i=0; i<3; i++) {
+    blink(200);  // 200ms on
+    delay(200);   // 200ms off
+  }
+  
+  delay(2000);    // Word gap before repeat
+  Serial.println("SOS cycle complete");
+}
+
+void blink(int duration) {
+  digitalWrite(LED, LOW);   // ON (inverted)
+  delay(duration);
+  digitalWrite(LED, HIGH);  // OFF (inverted)
+}
