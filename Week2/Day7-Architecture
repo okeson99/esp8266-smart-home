@@ -1,0 +1,39 @@
+# Smart Home Architecture v1.0
+
+## System Overview
+Two-node distributed IoT system for climate and lighting control.
+
+![System Diagram](diagram.jpg)
+
+## Components
+
+### Living Room (Master Node)
+- **Controller:** NodeMCU ESP8266
+- **Sensors:** DHT22 (temperature, humidity)
+- **Actuators:** Light, Fan (2-channel relay)
+- **Display:** OLED 0.96" (local status)
+- **Communication:** WiFi AP, HTTP server
+
+### Bedroom (Slave Node)
+- **Controller:** NodeMCU ESP8266
+- **Sensors:** DHT22, PIR motion
+- **Actuators:** AC unit (1-channel relay)
+- **Communication:** WiFi STA, reports to Master
+
+### Mobile Interface
+- **App:** HTTP Request Shortcuts
+- **Controls:** Light, Fan, AC, Display, Motion status
+- **Protocol:** HTTP GET over 2.4GHz WiFi
+
+## Data Flow
+1. User taps shortcut on phone
+2. HTTP request to Living Room NodeMCU
+3. NodeMCU toggles relay / updates OLED
+4. (Future) Bedroom node reports to Living Room via ESP-NOW
+5. (Future) Data logged to SD card
+
+## Future Extensions
+- [ ] MQTT broker for cloud integration
+- [ ] Voice control (Google Assistant)
+- [ ] Mobile app with MIT App Inventor
+- [ ] OTA firmware updates
